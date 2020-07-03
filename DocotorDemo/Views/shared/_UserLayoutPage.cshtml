@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Page.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body>
+    <!--Navbar Header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="~/Home" class="navbar-brand">
+                    <img src=" ~/images/images (16).ico" class="logo-size" />
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="~/Home">
+                            <i class="glyphicon glyphicon-home"></i>
+                            الرئيسية
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="~/Home/About">
+                            <i class="glyphicon glyphicon-info-sign"></i>
+                            عن الموقع
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Home/Contact">
+                            <i class="glyphicon glyphicon-earphone"></i>
+                            اتصل بنا
+                        </a>
+                    </li>
+                    <li>
+                        @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+                        {
+                            <input type="text" name="SearchName"
+                                   id="searchName" placeholder="ابحث هنا.." />
+                        }
+                    </li>
+                </ul>
+                <!--partial veiw-->
+         
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <strong>مرحبا بك يا </strong>
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <div>
+                                            <div class=" row">
+                                                <div class="col-lg-12">
+                                                    <p>
+                                                       
+                                                            <a href="~/Categories/Create"
+                                                               class="btn btn-primary btn-block">اضافة فئة جديدة</a>
+                                                            <a href="~/Role/Create"
+                                                               class="btn btn-info btn-block">اضافة صلاحية جديدة</a>
+                                                        
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="navbar-user">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <p class="text-center">
+                                                        <span class="glyphicon glyphicon-user img-font"></span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <p class="text-center">
+                                                        <strong>tttt</strong>
+                                                    </p>
+                                                    
+                                                        <a href="~/Home/GetJobByPublisher" class="btn btn-success btn-block">عرض الوظائف التي نشرتها</a>
+                                                        <a href="~/Jobs/Create" class="btn btn-success btn-block">اضافة وظيفةجديدة</a>
+                                                  
+                                                        <a href="~/Home/GetJobByUser" class="btn btn-success btn-block"> الوظائف التي تقدمت لها</a>
+                                                  
+                                                    <a href="~/Account/EditProfile" class="btn btn-primary btn-block">تعديل الحساب</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <div>
+                                            <div class=" row">
+                                                <div class="col-lg-12">
+                                                    <p>
+                                                        <a href="javascript:document.getElementById('logoff').submit()"
+                                                           class="btn btn-danger btn-block">تسجيل الخروج</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        </ul>
+                        @*<li>
+                @Html.ActionLink("مرحبا بك  يا :" + User.Identity.GetUserName(), "Index", "Manage")
+                   </li>
+                 <li>
+                     <a href="javascript:document.getElementById('logoff').submit()">تسجيل الخروج</a>
+                 </li>*@
+               
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="~/Account/Login">
+                                <i class="glyphicon glyphicon-user"></i>
+                                تسجيل الدخول
+                            </a>
+                        </li>
+                        <li>
+                            <a href="~/Account/Register">
+                                <i class="glyphicon glyphicon-lock"></i>
+                                اشتراك
+                            </a>
+                        </li>
+                    </ul>
+              
+
+
+            </div>
+        </div>
+    </nav>         <!--بداء بتصميم الهدير -->
+    <!--content-->
+    <div class="container" style="min-height :500px;">
+        <div class="row">
+            @RenderBody()
+        </div>
+    </div>
+    <!--Footer ثم الفوتير-->
+    <footer class="myfooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>
+                        <i class="glyphicon glyphicon-question-sign"></i> من نحن؟
+
+                    </h3>
+                    <p>
+                        موقع من خلالة بمكان اي شركة
+                        او مؤسسة عرض وظائفها
+                        علية كما انه بمكان اي شخص يبحث عن العمل
+                        زيارت موقعنا
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h3>
+                        <i class="glyphicon glyphicon-globe"></i> روابط هامة
+                    </h3>
+                    <ul>
+                        <li><a href="~/Home">وظائف في القطاع العام</a></li>
+                        <li><a href="~/Home">وظائف في القطاع الخاص</a></li>
+                        <li><a href="~/Home">وظائف في خارج البلاد</a></li>
+                        <li><a href="~/Home">وظائف في متنوعة </a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h3>
+                        <i class="glyphicon glyphicon-envelope"></i> تواصل معنا
+                    </h3>
+                    <ul>
+                        <li><a href="https://www.facebook.com/">صفحتنا على الفيس بك</a></li>
+                        <li><a href="https://twitter.com/">تابعنا على تويتر</a></li>
+                        <li><a href="https://www.youtube.com/">شاهدنا على اليوتوب</a></li>
+                        <li><a href="~/Home/Contact">اترك لنا رسالة </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="subfooter">
+            <span>جميع الحقوق محفوظة لدينا-2020</span>
+        </div>
+    </footer>
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

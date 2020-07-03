@@ -1,0 +1,67 @@
+﻿@model DocotorDemo.Models.Tbl_Item
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/shared/_UserLayoutPage.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tbl_Item</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Item_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item_Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item_Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item_Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item_Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item_Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item_Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Categories.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Categories.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Users.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Users.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

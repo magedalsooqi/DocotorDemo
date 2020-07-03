@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OnlineBookingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tbl_Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Tbl_Docotors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DoctorName" Type="nvarchar(max)" />
+          <Property Name="Specialist" Type="nvarchar(max)" />
+          <Property Name="DrDescription" Type="nvarchar(max)" />
+          <Property Name="DrImage" Type="nvarchar(max)" />
+          <Property Name="ItemID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tbl_Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Item_Name" Type="nvarchar(max)" />
+          <Property Name="Item_Description" Type="nvarchar(max)" />
+          <Property Name="Item_Image" Type="nvarchar(max)" />
+          <Property Name="Item_Location" Type="nvarchar(max)" />
+          <Property Name="CategoryID" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tbl_Patients">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Massage" Type="nvarchar(max)" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="50" />
+          <Property Name="DoctorID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tbl_Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Tbl_Shedular">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ShedularDate" Type="nvarchar(max)" />
+          <Property Name="ShedularTime" Type="nvarchar(max)" />
+          <Property Name="PatientID" Type="nvarchar" MaxLength="50" />
+          <Property Name="DoctorID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tbl_Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="UserType" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="PhoneNo" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Tbl_UsersRoles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleID" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Tbl_Docotors_Tbl_Item">
+          <End Role="Tbl_Item" Type="Self.Tbl_Item" Multiplicity="0..1" />
+          <End Role="Tbl_Docotors" Type="Self.Tbl_Docotors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Docotors">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Item_Tbl_Categories">
+          <End Role="Tbl_Categories" Type="Self.Tbl_Categories" Multiplicity="0..1" />
+          <End Role="Tbl_Item" Type="Self.Tbl_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Item">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Item_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
+          <End Role="Tbl_Item" Type="Self.Tbl_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Item">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Patients_Tbl_Docotors">
+          <End Role="Tbl_Docotors" Type="Self.Tbl_Docotors" Multiplicity="0..1" />
+          <End Role="Tbl_Patients" Type="Self.Tbl_Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Docotors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Patients">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Patients_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
+          <End Role="Tbl_Patients" Type="Self.Tbl_Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Patients">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Shedular_Tbl_Docotors">
+          <End Role="Tbl_Docotors" Type="Self.Tbl_Docotors" Multiplicity="0..1" />
+          <End Role="Tbl_Shedular" Type="Self.Tbl_Shedular" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Docotors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Shedular">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Shedular_Tbl_Patients">
+          <End Role="Tbl_Patients" Type="Self.Tbl_Patients" Multiplicity="0..1" />
+          <End Role="Tbl_Shedular" Type="Self.Tbl_Shedular" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Patients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Shedular">
+              <PropertyRef Name="PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UsersRoles_Tbl_Roles">
+          <End Role="Tbl_Roles" Type="Self.Tbl_Roles" Multiplicity="1" />
+          <End Role="Tbl_UsersRoles" Type="Self.Tbl_UsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_UsersRoles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UsersRoles_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="1" />
+          <End Role="Tbl_UsersRoles" Type="Self.Tbl_UsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_UsersRoles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OnlineBookingModelStoreContainer">
+          <EntitySet Name="Tbl_Categories" EntityType="Self.Tbl_Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Docotors" EntityType="Self.Tbl_Docotors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Item" EntityType="Self.Tbl_Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Patients" EntityType="Self.Tbl_Patients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Roles" EntityType="Self.Tbl_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Shedular" EntityType="Self.Tbl_Shedular" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Users" EntityType="Self.Tbl_Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_UsersRoles" EntityType="Self.Tbl_UsersRoles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Tbl_Docotors_Tbl_Item" Association="Self.FK_Tbl_Docotors_Tbl_Item">
+            <End Role="Tbl_Item" EntitySet="Tbl_Item" />
+            <End Role="Tbl_Docotors" EntitySet="Tbl_Docotors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Item_Tbl_Categories" Association="Self.FK_Tbl_Item_Tbl_Categories">
+            <End Role="Tbl_Categories" EntitySet="Tbl_Categories" />
+            <End Role="Tbl_Item" EntitySet="Tbl_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Item_Tbl_Users" Association="Self.FK_Tbl_Item_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_Item" EntitySet="Tbl_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Patients_Tbl_Docotors" Association="Self.FK_Tbl_Patients_Tbl_Docotors">
+            <End Role="Tbl_Docotors" EntitySet="Tbl_Docotors" />
+            <End Role="Tbl_Patients" EntitySet="Tbl_Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Patients_Tbl_Users" Association="Self.FK_Tbl_Patients_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_Patients" EntitySet="Tbl_Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Shedular_Tbl_Docotors" Association="Self.FK_Tbl_Shedular_Tbl_Docotors">
+            <End Role="Tbl_Docotors" EntitySet="Tbl_Docotors" />
+            <End Role="Tbl_Shedular" EntitySet="Tbl_Shedular" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Shedular_Tbl_Patients" Association="Self.FK_Tbl_Shedular_Tbl_Patients">
+            <End Role="Tbl_Patients" EntitySet="Tbl_Patients" />
+            <End Role="Tbl_Shedular" EntitySet="Tbl_Shedular" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UsersRoles_Tbl_Roles" Association="Self.FK_Tbl_UsersRoles_Tbl_Roles">
+            <End Role="Tbl_Roles" EntitySet="Tbl_Roles" />
+            <End Role="Tbl_UsersRoles" EntitySet="Tbl_UsersRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UsersRoles_Tbl_Users" Association="Self.FK_Tbl_UsersRoles_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_UsersRoles" EntitySet="Tbl_UsersRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OnlineBookingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Tbl_Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_Item" Relationship="Self.FK_Tbl_Item_Tbl_Categories" FromRole="Tbl_Categories" ToRole="Tbl_Item" />
+        </EntityType>
+        <EntityType Name="Tbl_Docotors">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DoctorName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Specialist" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DrDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DrImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_Item" Relationship="Self.FK_Tbl_Docotors_Tbl_Item" FromRole="Tbl_Docotors" ToRole="Tbl_Item" />
+          <NavigationProperty Name="Tbl_Patients" Relationship="Self.FK_Tbl_Patients_Tbl_Docotors" FromRole="Tbl_Docotors" ToRole="Tbl_Patients" />
+          <NavigationProperty Name="Tbl_Shedular" Relationship="Self.FK_Tbl_Shedular_Tbl_Docotors" FromRole="Tbl_Docotors" ToRole="Tbl_Shedular" />
+        </EntityType>
+        <EntityType Name="Tbl_Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Item_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Item_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Item_Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Item_Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_Categories" Relationship="Self.FK_Tbl_Item_Tbl_Categories" FromRole="Tbl_Item" ToRole="Tbl_Categories" />
+          <NavigationProperty Name="Tbl_Docotors" Relationship="Self.FK_Tbl_Docotors_Tbl_Item" FromRole="Tbl_Item" ToRole="Tbl_Docotors" />
+          <NavigationProperty Name="Tbl_Users" Relationship="Self.FK_Tbl_Item_Tbl_Users" FromRole="Tbl_Item" ToRole="Tbl_Users" />
+        </EntityType>
+        <EntityType Name="Tbl_Patients">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Massage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_Docotors" Relationship="Self.FK_Tbl_Patients_Tbl_Docotors" FromRole="Tbl_Patients" ToRole="Tbl_Docotors" />
+          <NavigationProperty Name="Tbl_Users" Relationship="Self.FK_Tbl_Patients_Tbl_Users" FromRole="Tbl_Patients" ToRole="Tbl_Users" />
+          <NavigationProperty Name="Tbl_Shedular" Relationship="Self.FK_Tbl_Shedular_Tbl_Patients" FromRole="Tbl_Patients" ToRole="Tbl_Shedular" />
+        </EntityType>
+        <EntityType Name="Tbl_Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_UsersRoles" Relationship="Self.FK_Tbl_UsersRoles_Tbl_Roles" FromRole="Tbl_Roles" ToRole="Tbl_UsersRoles" />
+        </EntityType>
+        <EntityType Name="Tbl_Shedular">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShedularDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShedularTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PatientID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_Docotors" Relationship="Self.FK_Tbl_Shedular_Tbl_Docotors" FromRole="Tbl_Shedular" ToRole="Tbl_Docotors" />
+          <NavigationProperty Name="Tbl_Patients" Relationship="Self.FK_Tbl_Shedular_Tbl_Patients" FromRole="Tbl_Shedular" ToRole="Tbl_Patients" />
+        </EntityType>
+        <EntityType Name="Tbl_Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_Item" Relationship="Self.FK_Tbl_Item_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_Item" />
+          <NavigationProperty Name="Tbl_Patients" Relationship="Self.FK_Tbl_Patients_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_Patients" />
+          <NavigationProperty Name="Tbl_UsersRoles" Relationship="Self.FK_Tbl_UsersRoles_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_UsersRoles" />
+        </EntityType>
+        <EntityType Name="Tbl_UsersRoles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tbl_Roles" Relationship="Self.FK_Tbl_UsersRoles_Tbl_Roles" FromRole="Tbl_UsersRoles" ToRole="Tbl_Roles" />
+          <NavigationProperty Name="Tbl_Users" Relationship="Self.FK_Tbl_UsersRoles_Tbl_Users" FromRole="Tbl_UsersRoles" ToRole="Tbl_Users" />
+        </EntityType>
+        <Association Name="FK_Tbl_Item_Tbl_Categories">
+          <End Role="Tbl_Categories" Type="Self.Tbl_Categories" Multiplicity="0..1" />
+          <End Role="Tbl_Item" Type="Self.Tbl_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Item">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Docotors_Tbl_Item">
+          <End Role="Tbl_Item" Type="Self.Tbl_Item" Multiplicity="0..1" />
+          <End Role="Tbl_Docotors" Type="Self.Tbl_Docotors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Docotors">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Patients_Tbl_Docotors">
+          <End Role="Tbl_Docotors" Type="Self.Tbl_Docotors" Multiplicity="0..1" />
+          <End Role="Tbl_Patients" Type="Self.Tbl_Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Docotors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Patients">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Shedular_Tbl_Docotors">
+          <End Role="Tbl_Docotors" Type="Self.Tbl_Docotors" Multiplicity="0..1" />
+          <End Role="Tbl_Shedular" Type="Self.Tbl_Shedular" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Docotors">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Shedular">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Item_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
+          <End Role="Tbl_Item" Type="Self.Tbl_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Item">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Patients_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
+          <End Role="Tbl_Patients" Type="Self.Tbl_Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Patients">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Shedular_Tbl_Patients">
+          <End Role="Tbl_Patients" Type="Self.Tbl_Patients" Multiplicity="0..1" />
+          <End Role="Tbl_Shedular" Type="Self.Tbl_Shedular" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Patients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Shedular">
+              <PropertyRef Name="PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UsersRoles_Tbl_Roles">
+          <End Role="Tbl_Roles" Type="Self.Tbl_Roles" Multiplicity="1" />
+          <End Role="Tbl_UsersRoles" Type="Self.Tbl_UsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_UsersRoles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UsersRoles_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="1" />
+          <End Role="Tbl_UsersRoles" Type="Self.Tbl_UsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_UsersRoles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OnlineBookingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tbl_Categories" EntityType="Self.Tbl_Categories" />
+          <EntitySet Name="Tbl_Docotors" EntityType="Self.Tbl_Docotors" />
+          <EntitySet Name="Tbl_Item" EntityType="Self.Tbl_Item" />
+          <EntitySet Name="Tbl_Patients" EntityType="Self.Tbl_Patients" />
+          <EntitySet Name="Tbl_Roles" EntityType="Self.Tbl_Roles" />
+          <EntitySet Name="Tbl_Shedular" EntityType="Self.Tbl_Shedular" />
+          <EntitySet Name="Tbl_Users" EntityType="Self.Tbl_Users" />
+          <EntitySet Name="Tbl_UsersRoles" EntityType="Self.Tbl_UsersRoles" />
+          <AssociationSet Name="FK_Tbl_Item_Tbl_Categories" Association="Self.FK_Tbl_Item_Tbl_Categories">
+            <End Role="Tbl_Categories" EntitySet="Tbl_Categories" />
+            <End Role="Tbl_Item" EntitySet="Tbl_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Docotors_Tbl_Item" Association="Self.FK_Tbl_Docotors_Tbl_Item">
+            <End Role="Tbl_Item" EntitySet="Tbl_Item" />
+            <End Role="Tbl_Docotors" EntitySet="Tbl_Docotors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Patients_Tbl_Docotors" Association="Self.FK_Tbl_Patients_Tbl_Docotors">
+            <End Role="Tbl_Docotors" EntitySet="Tbl_Docotors" />
+            <End Role="Tbl_Patients" EntitySet="Tbl_Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Shedular_Tbl_Docotors" Association="Self.FK_Tbl_Shedular_Tbl_Docotors">
+            <End Role="Tbl_Docotors" EntitySet="Tbl_Docotors" />
+            <End Role="Tbl_Shedular" EntitySet="Tbl_Shedular" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Item_Tbl_Users" Association="Self.FK_Tbl_Item_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_Item" EntitySet="Tbl_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Patients_Tbl_Users" Association="Self.FK_Tbl_Patients_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_Patients" EntitySet="Tbl_Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Shedular_Tbl_Patients" Association="Self.FK_Tbl_Shedular_Tbl_Patients">
+            <End Role="Tbl_Patients" EntitySet="Tbl_Patients" />
+            <End Role="Tbl_Shedular" EntitySet="Tbl_Shedular" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UsersRoles_Tbl_Roles" Association="Self.FK_Tbl_UsersRoles_Tbl_Roles">
+            <End Role="Tbl_Roles" EntitySet="Tbl_Roles" />
+            <End Role="Tbl_UsersRoles" EntitySet="Tbl_UsersRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UsersRoles_Tbl_Users" Association="Self.FK_Tbl_UsersRoles_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_UsersRoles" EntitySet="Tbl_UsersRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OnlineBookingModelStoreContainer" CdmEntityContainer="OnlineBookingEntities">
+          <EntitySetMapping Name="Tbl_Categories">
+            <EntityTypeMapping TypeName="OnlineBookingModel.Tbl_Categories">
+              <MappingFragment StoreEntitySet="Tbl_Categories">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Docotors">
+            <EntityTypeMapping TypeName="OnlineBookingModel.Tbl_Docotors">
+              <MappingFragment StoreEntitySet="Tbl_Docotors">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="Specialist" ColumnName="Specialist" />
+                <ScalarProperty Name="DrDescription" ColumnName="DrDescription" />
+                <ScalarProperty Name="DrImage" ColumnName="DrImage" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Item">
+            <EntityTypeMapping TypeName="OnlineBookingModel.Tbl_Item">
+              <MappingFragment StoreEntitySet="Tbl_Item">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+                <ScalarProperty Name="Item_Description" ColumnName="Item_Description" />
+                <ScalarProperty Name="Item_Image" ColumnName="Item_Image" />
+                <ScalarProperty Name="Item_Location" ColumnName="Item_Location" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Patients">
+            <EntityTypeMapping TypeName="OnlineBookingModel.Tbl_Patients">
+              <MappingFragment StoreEntitySet="Tbl_Patients">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Massage" ColumnName="Massage" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Roles">
+            <EntityTypeMapping TypeName="OnlineBookingModel.Tbl_Roles">
+              <MappingFragment StoreEntitySet="Tbl_Roles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Shedular">
+            <EntityTypeMapping TypeName="OnlineBookingModel.Tbl_Shedular">
+              <MappingFragment StoreEntitySet="Tbl_Shedular">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ShedularDate" ColumnName="ShedularDate" />
+                <ScalarProperty Name="ShedularTime" ColumnName="ShedularTime" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Users">
+            <EntityTypeMapping TypeName="OnlineBookingModel.Tbl_Users">
+              <MappingFragment StoreEntitySet="Tbl_Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_UsersRoles">
+            <EntityTypeMapping TypeName="OnlineBookingModel.Tbl_UsersRoles">
+              <MappingFragment StoreEntitySet="Tbl_UsersRoles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
